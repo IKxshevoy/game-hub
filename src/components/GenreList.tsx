@@ -1,6 +1,8 @@
 import {
+  Box,
   Button,
   HStack,
+  Heading,
   Image,
   List,
   ListItem,
@@ -9,13 +11,11 @@ import {
 import { Genre, useGenres } from "../hooks/useGenres";
 import getCroppedUrl from "../services/image-url";
 
-
-interface Props{ 
-  onSelectGenre: (genre:Genre) => void;
+interface Props {
+  onSelectGenre: (genre: Genre) => void;
   selectedGenre: Genre | null;
 }
-const GenreList = ({onSelectGenre, selectedGenre}: Props) => {
-
+const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
 
   if (error) return null;
@@ -23,27 +23,35 @@ const GenreList = ({onSelectGenre, selectedGenre}: Props) => {
   if (isLoading) return <Spinner />;
 
   return (
-    <List>
-      {data.map((genre) => (
-        <ListItem key={genre.id} padding={"7px"}>
-          <HStack>
-            <Image
-              boxSize={"32px"}
-              borderRadius={"8px"}
-              src={getCroppedUrl(genre.image_background)}
-            />
-            <Button
-              fontSize="lg"
-              variant="ghost"
-              fontWeight={selectedGenre?.id === genre.id ? "bold" : "normal"}
-              onClick={()=> onSelectGenre(genre)}
-            >
-              {genre.name}
-            </Button>
-          </HStack>
-        </ListItem>
-      ))}
-    </List>
+    <Box padding={"15px"}>
+      <Heading as={"h3"} fontSize={"2xl"} marginBottom={3}>
+        Genres
+      </Heading>
+      <List>
+        {data.map((genre) => (
+          <ListItem key={genre.id} marginBottom={"8px"}>
+            <HStack>
+              <Image
+                objectFit={"cover"}
+                boxSize={"32px"}
+                borderRadius={"8px"}
+                src={getCroppedUrl(genre.image_background)}
+              />
+              <Button
+                fontSize="lg"
+                variant="ghost"
+                fontWeight={selectedGenre?.id === genre.id ? "bold" : "normal"}
+                onClick={() => onSelectGenre(genre)}
+                whiteSpace={"normal"}
+                textAlign={"left"}
+              >
+                {genre.name}
+              </Button>
+            </HStack>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 };
 
