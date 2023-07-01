@@ -3,24 +3,9 @@ import { FetchResponse } from "../services/api-client";
 import APIClient from "../services/api-client";
 import ms from "ms";
 import useGameQuerystore from "../store";
+import { Game } from "../entities/Game";
 
 const apiClient = new APIClient<Game>("/games");
-
-export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
-}
-
-export interface Game {
-  id: number;
-  name: string;
-  background_image: string;
-  parent_platforms: { platform: Platform }[];
-  metacritic: number;
-  slug: string;
-  description_raw: string;
-}
 
 const useGames = () => {
   const gameQuery = useGameQuerystore((g) => g.gameQuery);
