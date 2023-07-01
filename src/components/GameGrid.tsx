@@ -7,13 +7,7 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const GameGrid = () => {
-  const {
-    data,
-    error,
-    isLoading,
-    fetchNextPage,
-    hasNextPage,
-  } = useGames();
+  const { data, error, isLoading, fetchNextPage, hasNextPage } = useGames();
 
   const skeletons = [1, 2, 3, 4, 5, 6];
 
@@ -23,14 +17,18 @@ const GameGrid = () => {
     data?.pages.reduce((acc, page) => acc + page.results.length, 0) || 0;
 
   return (
-    <Box padding={"10px"}>
+    <Box>
       <InfiniteScroll
         dataLength={fetchedGamesCount}
         hasMore={!!hasNextPage}
         next={() => fetchNextPage()}
         loader={<Spinner />}
       >
-        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={5}>
+        <SimpleGrid
+          columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
+          spacing={5}
+          padding={"20px"}
+        >
           {isLoading &&
             skeletons.map((skeleton) => (
               <GameCardContainer key={skeleton}>
